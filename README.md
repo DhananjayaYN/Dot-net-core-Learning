@@ -34,7 +34,7 @@ The goal of this repository is to document my progress and hands-on experience w
 
 ## Demo Projects
 
-### 1. MyFirstAPP (Controller-Based API)
+### 1. MyFirstAPI (Controller-Based API)
 
 **MyFirstAPP** is a simple ASP.NET Core Web API project built using the **controller-based architecture**.  
 It demonstrates how traditional Web APIs are structured using controllers, routes, and action methods.
