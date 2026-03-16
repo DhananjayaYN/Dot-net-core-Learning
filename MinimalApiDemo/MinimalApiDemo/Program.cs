@@ -46,7 +46,7 @@ app.MapGet("/weatherforecast", () =>
 // Product API endpoints --------------------------------
 
 app.MapGet("/api/products", () =>
-{
+{    
     // Sample data - replace with your actual data source
     var products = new[]
     {
@@ -61,6 +61,22 @@ app.MapGet("/api/products", () =>
 
 app.MapPost("/api/products", ([FromBody] Product product) =>
 {
+    // Basic validation
+    if (product == null)
+    {
+        return Results.BadRequest(new { message = "Product data is required." });
+    }
+
+    if (string.IsNullOrWhiteSpace(product.Name))
+    {
+        return Results.BadRequest(new { message = "Product name is required." });
+    }
+
+    if (product.Price <= 0)
+    {
+        return Results.BadRequest(new { message = "Price must be greater than zero." });
+    }
+
     // Here you would typically add the product to your database
     var newProduct = new Product
     {
@@ -70,11 +86,30 @@ app.MapPost("/api/products", ([FromBody] Product product) =>
     };
     return Results.Created($"/api/products/{newProduct.Id}", newProduct);
 })
-.WithName("AddProduct");
+.WithName("AddProduct")
+.Produces<Product>(StatusCodes.Status201Created)
+.Produces(StatusCodes.Status400BadRequest);
 
 
 app.MapPut("/api/products/{id}", ([FromRoute] int id, [FromBody] Product updatedProduct) =>
 {
+    // Basic validation
+    if (updatedProduct == null)
+    {
+        return Results.BadRequest(new { message = "Updated product data is required." });
+    }
+
+    if (string.IsNullOrWhiteSpace(updatedProduct.Name))
+    {
+        return Results.BadRequest(new { message = "Product name is required." });
+    }
+
+    if (updatedProduct.Price <= 0)
+    {
+        return Results.BadRequest(new { message = "Price must be greater than zero." });
+    }
+
+
     // Here you would typically update the product in your database
     var updateProduct = new Product
     {
@@ -84,14 +119,23 @@ app.MapPut("/api/products/{id}", ([FromRoute] int id, [FromBody] Product updated
     };
     return Results.Ok(updateProduct);
 })
-.WithName("UpdateProduct");
+.WithName("UpdateProduct")
+.Produces<Product>(StatusCodes.Status200OK)
+.Produces(StatusCodes.Status400BadRequest);
 
 app.MapDelete("/api/products/{id}", ([FromRoute] int id) =>
 {
+    //basic validation
+    if (id <= 0)    {
+        return Results.BadRequest(new { message = "Invalid product ID." });
+    }
+
     // Here you would typically delete the product from your database
     return Results.NoContent();
 })
-.WithName("DeleteProduct");
+.WithName("DeleteProduct")
+.Produces(StatusCodes.Status204NoContent)
+.Produces(StatusCodes.Status400BadRequest);
 
 
 //--------------------------------------------------------
