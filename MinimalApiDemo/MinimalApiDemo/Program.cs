@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using MinimalApiDemo;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,11 @@ builder.Services.AddEndpointsApiExplorer();
 
 // Add Swagger services
 builder.Services.AddSwaggerGen();
+
+// Add DbContext with SQLite provider
+builder.Services.AddDbContext<TaskDbContext>(options =>
+    options.UseSqlite("Data Source=tasks.db"));
+
 
 var app = builder.Build();
 
@@ -137,6 +144,85 @@ app.MapDelete("/api/products/{id}", ([FromRoute] int id) =>
 .Produces(StatusCodes.Status204NoContent)
 .Produces(StatusCodes.Status400BadRequest);
 
+// Task API endpoints with DbContext ------------------------------------
+
+app.MapGet("/api/tasks", async (TaskDbContext db) =>
+{
+    var tasks = await db.Tasks.ToListAsync();
+    return Results.Ok(tasks);
+}) 
+.WithName("GetTasks");
+
+
+app.MapGet("/api/tasks/{id}", async (int id, TaskDbContext db) =>
+{
+    var task = await db.Tasks.FindAsync(id);
+    return task != null ? Results.Ok(task) : Results.NotFound();
+})
+.WithName("GetTaskById");
+
+
+app.MapPost("/api/tasks", async ([FromBody] MinimalApiDemo.Task task, TaskDbContext db) =>
+{
+    if (task == null)
+    {
+        return Results.BadRequest(new { message = "Task data is required." });
+    }
+
+    if (string.IsNullOrWhiteSpace(task.Title))
+    {
+        return Results.BadRequest(new { message = "Task title is required." });
+    }
+
+    db.Tasks.Add(task);
+    await db.SaveChangesAsync();
+    return Results.Created($"/api/tasks/{task.Id}", task);
+})
+.WithName("CreateTask");
+
+
+app.MapPut("/api/tasks/{id}", async (int id, [FromBody] MinimalApiDemo.Task updatedTask, TaskDbContext db) =>
+{
+    if (updatedTask == null)
+    {
+        return Results.BadRequest(new { message = "Updated task data is required." });
+    }
+
+    if (string.IsNullOrWhiteSpace(updatedTask.Title))
+    {
+        return Results.BadRequest(new { message = "Task title is required." });
+    }
+
+    var existingTask = await db.Tasks.FindAsync(id);
+    if (existingTask == null)
+    {
+        return Results.NotFound();
+    }
+
+    existingTask.Title = updatedTask.Title;
+    existingTask.Description = updatedTask.Description;
+    existingTask.IsCompleted = updatedTask.IsCompleted;
+    existingTask.DueDate = updatedTask.DueDate;
+
+    await db.SaveChangesAsync();
+    return Results.Ok(existingTask);
+})
+.WithName("UpdateTask");
+
+
+app.MapDelete("/api/tasks/{id}", async (int id, TaskDbContext db) =>
+{
+    var task = await db.Tasks.FindAsync(id);
+    if (task == null)
+    {
+        return Results.NotFound();
+    }
+
+    db.Tasks.Remove(task);
+    await db.SaveChangesAsync();
+    return Results.NoContent();
+})
+.WithName("DeleteTask");
 
 //--------------------------------------------------------
 
