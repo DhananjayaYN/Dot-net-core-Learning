@@ -1,0 +1,52 @@
+
+<div class= "user-card">
+    <h3>@Name</h3>
+    <p>@Email</p>   
+    <p>Role: @Role</p>
+
+    <button type="button" @onclick="ToggleDetails">
+        @(ShowDetails ? "Hide Details" : "Show Details")
+    </button>
+
+    @if (ShowDetails)
+    {
+        <div class="user-details">
+            <p>Department: @Department</p>
+            <p>Joined: @JoinDate.ToString("yyyy/MM/dd")</p>
+        </div>
+    }
+</div>
+
+<div>
+    <h3>Test Button</h3>
+    <button @onclick="Toggle">Click me</button>
+    @if (Clicked){ <p>Clicked!</p> }
+</div>
+
+@code {
+    private bool Clicked = false;
+    private void Toggle() => Clicked = !Clicked;
+}
+
+
+@code {
+    [Parameter] public string Name { get; set; } = string.Empty;
+
+    [Parameter] public string Email { get; set; } = string.Empty;
+
+    [Parameter] public string Role { get; set; } = string.Empty;
+
+    [Parameter] public string Department { get; set; } = string.Empty;
+
+    [Parameter] public DateTime JoinDate { get; set; } = DateTime.Now;
+
+    private bool ShowDetails;
+
+    private void ToggleDetails()
+    {
+        Console.WriteLine("Clicked");
+        ShowDetails = !ShowDetails;
+        StateHasChanged();
+
+    }
+}

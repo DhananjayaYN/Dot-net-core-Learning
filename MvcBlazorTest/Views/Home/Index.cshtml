@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<div style = "margin-top: 2rem;">
+    <h2>Team Members</h2>
+    <component type="typeof(MvcBlazorTest.Components.UserCard)" render-mode="ServerPrerendered" 
+               
+               param-Name='@("John Doe")' 
+               param-Email='@("john.doe@example.com")'
+               param-Role='@("Developer")'
+               param-Department='@("Engineering")'
+               param-JoinDate='@new DateTime(2026,03,25)'/>
+
+</div>
