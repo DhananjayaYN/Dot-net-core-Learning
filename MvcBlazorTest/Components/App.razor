@@ -1,0 +1,52 @@
+@implements IAsyncDisposable
+@inject NavigationManager Navigation
+
+<Routes />
+
+<div id="blazor-error-ui">
+    An unhandled error has occurred.
+    <a href="" class="reload">Reload</a>
+    <a class="dismiss">🗙</a>
+</div>
+
+@code {
+    async ValueTask IAsyncDisposable.DisposeAsync()
+    {
+        await Task.CompletedTask;
+    }
+}
+
+<style>
+    #blazor-error-ui {
+        background-color: rgb(255, 15, 0);
+        color: rgb(255, 255, 255);
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        text-align: center;
+        display: none;
+        padding: 16px;
+        z-index: 9999;
+    }
+
+    #blazor-error-ui .dismiss {
+        cursor: pointer;
+        position: absolute;
+        right: 3.5rem;
+        top: 0.5rem;
+    }
+
+    #blazor-error-ui .reload {
+        cursor: pointer;
+        color: rgb(255, 255, 255);
+    }
+
+    #blazor-error-ui.show {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+</style>

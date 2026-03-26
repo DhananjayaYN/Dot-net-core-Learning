@@ -1,0 +1,63 @@
+@page "/"
+@rendermode InteractiveServer
+
+<PageTitle>Home - MvcBlazor</PageTitle>
+
+<div class="home-container">
+    <div class="welcome-section">
+        <h1 class="welcome-title">Welcome to MvcBlazor Test</h1>
+        <p class="welcome-subtitle">A hybrid ASP.NET Core application combining MVC and Blazor</p>
+    </div>
+
+    <div class="features-section">
+        <h2>Features</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📦</div>
+                <h3>Product Catalog</h3>
+                <p>Browse our collection of products with interactive shopping features.</p>
+                <a href="/products" class="feature-btn">View Products</a>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🔢</div>
+                <h3>Counter Demo</h3>
+                <p>Interactive counter component demonstrating real-time state management.</p>
+                <a href="/counter" class="feature-btn">Try Counter</a>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Blazor Powered</h3>
+                <p>Server-side Blazor for seamless, real-time interactivity without page reloads.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3>Responsive Design</h3>
+                <p>Beautiful, mobile-friendly UI built with Bootstrap and modern CSS.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="stats-section">
+        <h2>Quick Stats</h2>
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-number">3</div>
+                <div class="stat-label">Products Available</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">.NET 9</div>
+                <div class="stat-label">Latest Framework</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Interactive UI</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+}

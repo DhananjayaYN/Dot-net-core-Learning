@@ -1,0 +1,87 @@
+@page "/products"
+@rendermode InteractiveServer
+
+<PageTitle>Products - MvcBlazor</PageTitle>
+
+<div class="products-container">
+    <div class="products-header">
+        <h1>Product Catalog</h1>
+        <p>Browse and add products to your cart</p>
+    </div>
+
+    @if(!string.IsNullOrEmpty(cartMessage))
+    {
+        <div class="alert-success">
+            @cartMessage
+            <button type="button" @onclick="ClearMessage" class="alert-close">&times;</button>
+        </div>
+    }
+
+    <ProductList
+        Title="Our Products"
+        Products="@products"
+        OnAddToCart="HandleProductAddedToCart" />
+</div>
+
+@code {
+    private string cartMessage = string.Empty;
+    private List<Product> products = new List<Product>
+    {
+        new Product { 
+            Id = 1,
+            Name = "Laptop", 
+            Description = "High performance laptop with latest processor and 16GB RAM", 
+            Price = 999.99m, 
+            ImageUrl = "https://via.placeholder.com/200?text=Laptop" 
+        },
+        new Product { 
+            Id = 2,
+            Name = "Smartphone", 
+            Description = "Latest model smartphone with advanced camera system", 
+            Price = 699.99m, 
+            ImageUrl = "https://via.placeholder.com/200?text=Smartphone" 
+        },
+        new Product { 
+            Id = 3,
+            Name = "Headphones", 
+            Description = "Premium noise-cancelling wireless headphones", 
+            Price = 199.99m, 
+            ImageUrl = "https://via.placeholder.com/200?text=Headphones" 
+        },
+        new Product { 
+            Id = 4,
+            Name = "Tablet", 
+            Description = "10-inch display tablet for entertainment and productivity", 
+            Price = 449.99m, 
+            ImageUrl = "https://via.placeholder.com/200?text=Tablet" 
+        },
+        new Product { 
+            Id = 5,
+            Name = "Smartwatch", 
+            Description = "Advanced smartwatch with health monitoring features", 
+            Price = 299.99m, 
+            ImageUrl = "https://via.placeholder.com/200?text=Smartwatch" 
+        },
+        new Product { 
+            Id = 6,
+            Name = "Camera", 
+            Description = "Professional DSLR camera with 4K video recording", 
+            Price = 1299.99m, 
+            ImageUrl = "https://via.placeholder.com/200?text=Camera" 
+        }
+    };
+
+    private void HandleProductAddedToCart(Product product)
+    {
+        if (product != null)
+        {
+            cartMessage = $"✓ Added '{product.Name}' to cart! Price: ${product.Price:F2}";
+            StateHasChanged();
+        }
+    }
+
+    private void ClearMessage()
+    {
+        cartMessage = string.Empty;
+    }
+}

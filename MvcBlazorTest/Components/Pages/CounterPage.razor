@@ -1,0 +1,113 @@
+@page "/counter"
+@rendermode InteractiveServer
+
+<PageTitle>Counter - MvcBlazor</PageTitle>
+
+<div class="counter-container">
+    <div class="counter-header">
+        <h1>Interactive Counter</h1>
+        <p>Increment, decrement, or reset the counter</p>
+    </div>
+
+    <div class="counter-content">
+        <div class="counter-card">
+            <div class="counter-display">
+                <div class="counter-value">@currentCount</div>
+                <p class="counter-label">Current Count</p>
+            </div>
+
+            <div class="counter-controls">
+                <button class="btn btn-decrease" @onclick="Decrement" disabled="@(currentCount <= 0)">
+                    <span class="btn-icon">➖</span>
+                    <span class="btn-text">Decrease</span>
+                </button>
+
+                <button class="btn btn-reset" @onclick="Reset">
+                    <span class="btn-icon">🔄</span>
+                    <span class="btn-text">Reset</span>
+                </button>
+
+                <button class="btn btn-increase" @onclick="Increment">
+                    <span class="btn-icon">➕</span>
+                    <span class="btn-text">Increase</span>
+                </button>
+            </div>
+
+            @if (currentCount > 0)
+            {
+                <div class="counter-info">
+                    <p><strong>Status:</strong> Counter is at <strong>@currentCount</strong></p>
+                </div>
+            }
+
+            @if (currentCount > 10)
+            {
+                <div class="alert-warning">
+                    <span class="alert-icon">⚠️</span>
+                    <span>Wow! That's a high number!</span>
+                </div>
+            }
+
+            @if (currentCount > 50)
+            {
+                <div class="alert-danger">
+                    <span class="alert-icon">🔥</span>
+                    <span>You're on fire! Counter is extremely high!</span>
+                </div>
+            }
+
+            @if (currentCount < 0)
+            {
+                <div class="alert-info">
+                    <span class="alert-icon">❄️</span>
+                    <span>Negative numbers detected!</span>
+                </div>
+            }
+        </div>
+
+        <div class="counter-stats">
+            <div class="stat-item">
+                <div class="stat-title">Total Increments</div>
+                <div class="stat-value">@incrementCount</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-title">Total Decrements</div>
+                <div class="stat-value">@decrementCount</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-title">Times Reset</div>
+                <div class="stat-value">@resetCount</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private int currentCount = 0;
+    private int incrementCount = 0;
+    private int decrementCount = 0;
+    private int resetCount = 0;
+
+    private void Increment()
+    {
+        currentCount++;
+        incrementCount++;
+    }
+
+    private void Decrement()
+    {
+        if (currentCount > 0)
+        {
+            currentCount--;
+            decrementCount++;
+        }
+    }
+
+    private void Reset()
+    {
+        currentCount = 0;
+        resetCount++;
+        incrementCount = 0;
+        decrementCount = 0;
+    }
+}

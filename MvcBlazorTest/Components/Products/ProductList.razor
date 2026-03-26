@@ -1,0 +1,36 @@
+<div class="product-list">
+    <h2>@Title</h2>
+    @if(Products.Any())
+    {
+        <div class="product-grid">
+            @foreach (var product in Products)
+            {
+                <ProductCard 
+                        ProductName="@product.Name"
+                        Description="@product.Description"
+                        Price="@product.Price"
+                        ImageUrl="@product.ImageUrl"
+                        OnAddToCart="@(() => HandleAddToCart(product))" />
+            }
+        </div>
+    }
+    else
+    {
+        <p class="no-products">No products available.</p>
+    }
+</div>
+
+
+@code {
+    [Parameter] public string Title { get; set; } = "Our Products";
+    [Parameter] public List<Product> Products { get; set; } = new List<Product>();
+    [Parameter] public EventCallback<Product> OnAddToCart { get; set; }
+    
+    private async Task HandleAddToCart(Product product)
+    {
+        if (OnAddToCart.HasDelegate)
+        {
+            await OnAddToCart.InvokeAsync(product);
+        }
+    }
+}
