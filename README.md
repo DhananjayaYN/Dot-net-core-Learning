@@ -142,6 +142,91 @@ http://localhost:<port>/swagger
 
 You can use the Swagger interface to test all API endpoints directly from the browser.
 
+### 3. MVCBlazorTest (MVC architecture with Blasor Framework)
+
+MVCBlazorTest is a web application built using **ASP.NET Core MVC architecture integrated with Blazor Server**. This project demonstrates how traditional MVC applications can be enhanced with **interactive Blazor components**, enabling dynamic UI behavior using C# instead of JavaScript.
+
+
+**Features**
+
+- MVC-based page structure  
+- Reusable Blazor components  
+- Server-side interactivity using C#  
+- Clean separation of concerns  
+- Integration of Razor Views with Blazor components  
+
+
+**Technologies Used**
+
+- ASP.NET Core MVC  
+- Blazor Server  
+- C#  
+- Razor Views  
+- SignalR
+
+#### Required Configuration
+
+In `Program.cs`:
+
+##### Swagger Configuration in Program.cs
+
+ ``` csharp 
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+builder.Services.AddControllersWithViews();
+
+//Add Blazer services to the container.
+builder.Services.AddServerSideBlazor()
+    .AddCircuitOptions(o => o.DetailedErrors = true);
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Home/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
+}
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseRouting();
+
+app.UseAuthorization();
+
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+    app.MapBlazorHub(); // For Blazor Intigration
+
+
+app.Run();
+```
+
+#### How to Run MvcBlazorTest
+
+1. Navigate to the project folder
+
+``` bash
+cd MvcBlazorTest
+```
+
+2. Intigrate Blazor Framwork
+
+``` bash
+dotnet add package Microsoft.AspNetCore.Components.Web
+```
+
+3. Run the application
+
+``` bash
+dotnet run
+```
+
 ## Author
 
 Nimesh Dhananjaya  
