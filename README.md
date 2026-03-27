@@ -227,6 +227,65 @@ dotnet add package Microsoft.AspNetCore.Components.Web
 dotnet run
 ```
 
+## Data Binding in Blazor
+
+Data binding in Blazor connects the **UI with application logic**, allowing data to automatically update between them without manual refresh.
+
+---
+
+### 🔹 Types of Data Binding
+
+#### 1. One-Way Binding
+Data flows from the code to the UI (read-only display).
+
+```razor
+<p>Hello, @name</p>
+
+@code {
+    string name = "Nimesh";
+}
+```
+Mermaid chart
+```mermaid
+graph LR
+    Data[Component State] --> UI[Display UI]
+```
+    
+#### 2. Two-Way Binding
+Data flows both ways using @bind. Changes in UI update the variable automatically.
+
+```razor
+<input @bind="name" placeholder="Enter name" />
+
+<p>Hello, @name</p>
+
+@code {
+    string name = "";
+}
+```
+Mermaid chart
+```mermaid
+graph LR
+    UI[User Input] <--> Data[Component State]
+```
+
+### 🔹 Real-Time Input Example
+
+```razor
+<input @bind="search" @bind:event="oninput" />
+
+<p>You typed: @search</p>
+
+@code {
+    string search = "";
+}
+```
+### 🔹 Use Cases
+
+- Form handling (user input updates instantly)
+- Dynamic UI updates without page reload
+- Maintaining state across components
+
 ## Author
 
 Nimesh Dhananjaya  
