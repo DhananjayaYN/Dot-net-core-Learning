@@ -1,0 +1,37 @@
+@using FeedbackFormApplication;
+@inject FeedbackState FeedbackState
+
+<h3>Feedback Submission</h3>
+
+@if (FeedbackListItems.Count > 0)
+{
+    <ul>
+        @foreach (var feedback in FeedbackListItems)
+        {
+            <li>
+                @* <strong>Name:</strong> @feedback.Name <br />
+                <strong>Email:</strong> @feedback.Email <br />
+                <strong>Comment:</strong> @feedback.Comment *@
+                <strong>@feedback.Name</strong>
+                (<em>@feedback.Email</em>)
+                <p>@feedback.Comment</p>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>No feedback has been submitted yet.</p>
+}
+
+
+
+@code{
+    private List<Feedback> FeedbackListItems = new();
+
+        protected override async Task OnInitializedAsync()
+        {
+            FeedbackListItems = await FeedbackState.LoadFeedbackAsync();
+            
+        }
+}

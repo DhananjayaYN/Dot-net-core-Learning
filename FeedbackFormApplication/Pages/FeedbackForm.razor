@@ -1,0 +1,43 @@
+@page "/feedback"
+@using FeedbackFormApplication
+
+@inject FeedbackFormApplication.FeedbackState FeedbackState
+
+
+<EditForm Model="feedback" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <InputText id="name" class="form-control" @bind-Value="feedback.Name" />
+        <ValidationMessage For="(() => feedback.Name)" />
+    </div>
+
+    <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <InputText id="email" type="email" class="form-control" @bind-Value="feedback.Email" />
+        <ValidationMessage For="(() => feedback.Email)" />
+    </div>
+
+    <div class="mb-3">
+        <label for="comment" class="form-label">Comment</label>
+        <InputTextArea id="comment" class="form-control" @bind-Value="feedback.Comment" />
+        <ValidationMessage For="(() => feedback.Comment)" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit Feedback</button>
+
+</EditForm>
+
+
+@code{
+    private Feedback feedback = new ();
+
+    private async Task HandleValidSubmit()
+    {
+        await FeedbackState.SaveFeedbackAsync(new List<Feedback> { feedback });
+        Console.WriteLine($"Feedback submitted: Name={feedback.Name}, Email={feedback.Email}, Comment={feedback.Comment}");
+        feedback = new Feedback(); // Clear the form after submission
+    }
+}
