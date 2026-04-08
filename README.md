@@ -227,6 +227,63 @@ dotnet add package Microsoft.AspNetCore.Components.Web
 dotnet run
 ```
 
+### 4. ReactIntegration (React + Vite Frontend with ASP.NET Core Backend)
+
+**ReactIntegration** is a full-stack project that integrates a **React frontend built with Vite** and an **ASP.NET Core backend API**. This setup demonstrates how modern frontend tooling can communicate with a robust .NET backend for dynamic data rendering.
+
+**Features**
+
+- Frontend built using **React + Vite** for fast development and hot module replacement  
+- Backend using **ASP.NET Core Web API** for handling requests  
+- Fetching and displaying **WeatherForecast** data from `/weatherforecast` API endpoint  
+- Client-side rendering with React components consuming server API  
+- Real-time updates in the UI without page reload  
+
+**Technologies Used**
+
+- ASP.NET Core  
+- React + Vite  
+- JavaScript / JSX  
+- Fetch API for HTTP requests  
+- CSS for styling  
+
+#### Required Configuration
+
+1. Ensure ASP.NET Core backend is running on a port (e.g., `http://localhost:5129`)  
+2. Configure React frontend to proxy API requests in `vite.config.js`:
+
+```javascript
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    proxy: {
+      '/weatherforecast': ' http://localhost:5129'
+    }
+  }
+})
+```
+#### How to Run ReactIntegration
+
+1. Frontend
+
+``` bash
+cd ReactIntegration/react-dashboard
+npm install
+npm run dev
+```
+
+2. Backend
+
+``` bash
+cd ReactIntegration/ReactDashboardAPI
+dotnet run
+```
+
+
 ## Data Binding in Blazor
 
 Data binding in Blazor connects the **UI with application logic**, allowing data to automatically update between them without manual refresh.
