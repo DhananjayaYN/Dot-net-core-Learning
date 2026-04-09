@@ -343,6 +343,96 @@ graph LR
 - Dynamic UI updates without page reload
 - Maintaining state across components
 
+## Bootstrap Integration in ASP.NET Core
+
+Bootstrap integration in ASP.NET Core enables developers to build responsive, mobile-first UI quickly using pre-built CSS and JavaScript components.
+
+---
+
+### 🔹 Why Use Bootstrap
+
+- Faster UI development
+- Built-in responsive grid system
+- Pre-designed components (buttons, cards, navbar, forms)
+- Consistent design across pages
+
+### 🔹 Adding Bootstrap to `_Layout.cshtml`
+
+```javascript
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MyApp</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Site CSS -->
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">MyApp</a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        @RenderBody()
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-light text-center text-muted mt-5 p-3">
+        <div class="container">
+            <p>&copy; @DateTime.Now.Year - MyApp | Built with ASP.NET Core & Bootstrap</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Site JS -->
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @RenderSection("Scripts", required: false)
+
+</body>
+</html>
+```
+### 🔹 Key Idea
+
+Bootstrap works by combining layout and components:
+
+```mermaid
+graph LR
+    HTML --> BootstrapCSS
+    BootstrapCSS --> StyledUI
+    BootstrapJS --> InteractiveUI
+```
+
+
 ## Author
 
 Nimesh Dhananjaya  
